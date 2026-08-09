@@ -5,7 +5,7 @@ pistol ballistics, plus a from-scratch wound and gore pipeline for the Glock17
 — raycast-based limb wounding, ejected tissue chunks, and scatter blood decals.
 Everything is editable live through FruitLib's in-game menu, no restart needed.
 
-Requires [FruitLib](../5_FruitLib) **2.0.0** or newer in your `Mods` folder.
+Requires [FruitLib](https://github.com/Luca-Nero/FruitLib) **2.0.0** or newer in your `Mods` folder.
 
 ---
 
@@ -64,7 +64,7 @@ counters in FruitLib's perf overlay (**F11**).
 ---
 
 ## How to Install
-1. Install [FruitLib](../5_FruitLib) first — FruitTweaks won't start without it.
+1. Install [FruitLib](https://github.com/Luca-Nero/FruitLib) first — FruitTweaks won't start without it.
 2. Drag **FruitTweaks.dll** into your `Mods/` folder.
 3. Run the game — `FruitTweaksConfig.ini` appears next to the DLL on first launch.
 

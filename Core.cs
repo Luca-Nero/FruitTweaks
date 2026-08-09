@@ -31,6 +31,7 @@ namespace FruitTweaks
             RagdollTweaks.InitFromConfig();
             FruitLib.FruitPerfMon.RegisterCounter("Chunks  (active)", () => WoundEjectVFX.ActiveChunks);
             FruitLib.FruitPerfMon.RegisterCounter("Decals  (active)", () => WoundEjectVFX.ActiveDecals);
+            FruitUpdateCheck.Register("FruitTweaks", "2.0.0", "Luca-Nero", "FruitTweaks");
             LoggerInstance.Msg("FruitTweaks loaded.");
         }
 
