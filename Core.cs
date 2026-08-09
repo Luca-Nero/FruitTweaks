@@ -6,7 +6,7 @@ using FruitLib;
 using MelonLoader;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(FruitTweaks.Core), "FruitTweaks", "2.0.0", "Luca_Nero")]
+[assembly: MelonInfo(typeof(FruitTweaks.Core), "FruitTweaks", FruitTweaks.Core.Version, "Luca_Nero")]
 [assembly: MelonGame]
 
 namespace FruitTweaks
@@ -14,11 +14,12 @@ namespace FruitTweaks
     public class Core : MelonMod
     {
         private bool _wasMenuOpen;
+        public const string Version = "2.0.1";
 
         public override void OnInitializeMelon()
         {
             HarmonyInstance.PatchAll();
-            if (!FruitVersion.Require("FruitTweaks", 2, 0, 0)) return;
+            if (!FruitVersion.Require("FruitTweaks", 2, 0, 1)) return;
             Init();
         }
 
@@ -31,7 +32,7 @@ namespace FruitTweaks
             RagdollTweaks.InitFromConfig();
             FruitLib.FruitPerfMon.RegisterCounter("Chunks  (active)", () => WoundEjectVFX.ActiveChunks);
             FruitLib.FruitPerfMon.RegisterCounter("Decals  (active)", () => WoundEjectVFX.ActiveDecals);
-            FruitUpdateCheck.Register("FruitTweaks", "2.0.0", "Luca-Nero", "FruitTweaks");
+            FruitUpdateCheck.Register("FruitTweaks", Version, "Luca-Nero", "FruitTweaks");
             LoggerInstance.Msg("FruitTweaks loaded.");
         }
 
