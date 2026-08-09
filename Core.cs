@@ -14,12 +14,12 @@ namespace FruitTweaks
     public class Core : MelonMod
     {
         private bool _wasMenuOpen;
-        public const string Version = "2.0.1";
+        public const string Version = "2.0.2";
 
         public override void OnInitializeMelon()
         {
             HarmonyInstance.PatchAll();
-            if (!FruitVersion.Require("FruitTweaks", 2, 0, 1)) return;
+            if (!FruitVersion.Require("FruitTweaks", 2, 0, 2)) return;
             Init();
         }
 
