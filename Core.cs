@@ -8,19 +8,34 @@ using UnityEngine;
 
 [assembly: MelonInfo(typeof(FruitTweaks.Core), "FruitTweaks", FruitTweaks.Core.Version, "Luca_Nero")]
 [assembly: MelonGame]
+[assembly: MelonOptionalDependencies("FruitLib")]
+[assembly: HarmonyDontPatchAll]
 
 namespace FruitTweaks
 {
     public class Core : MelonMod
     {
         private bool _wasMenuOpen;
-        public const string Version = "2.0.2";
+        public const string Version = "2.0.3";
+
+        // ── FruitLib dependency ──────────────────────────────────────────────
+        private const int LibMajor = 2, LibMinor = 0, LibPatch = 0;
+        private bool _active;
 
         public override void OnInitializeMelon()
         {
+            _active = FruitGate.Check("FruitTweaks", LibMajor, LibMinor, LibPatch);
+            if (!_active) return;
+
             HarmonyInstance.PatchAll();
-            if (!FruitVersion.Require("FruitTweaks", 2, 0, 2)) return;
             Init();
+        }
+
+        public override void OnLateInitializeMelon()
+        {
+            if (_active) return;
+
+            try { Unregister(FruitGate.FailureReason, silent: true); } catch { }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -33,16 +48,30 @@ namespace FruitTweaks
             FruitLib.FruitPerfMon.RegisterCounter("Chunks  (active)", () => WoundEjectVFX.ActiveChunks);
             FruitLib.FruitPerfMon.RegisterCounter("Decals  (active)", () => WoundEjectVFX.ActiveDecals);
             FruitUpdateCheck.Register("FruitTweaks", Version, "Luca-Nero", "FruitTweaks");
-            LoggerInstance.Msg("FruitTweaks loaded.");
+            LoggerInstance.Msg($"FruitTweaks v{Version} loaded.");
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        {
+            if (!_active) return;
+            SceneLoadedBody();
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private void SceneLoadedBody()
         {
             BloodDecalAtlas.Init();
             RagdollTweaks.OnSceneLoaded();
         }
 
         public override void OnUpdate()
+        {
+            if (!_active) return;
+            UpdateBody();
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private void UpdateBody()
         {
             WorldTweaks.Update();
             RagdollTweaks.Update();
